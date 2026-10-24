@@ -1,0 +1,28 @@
+name: Bug report
+description: Wrong validation, conversion, wave plan or reconciliation result.
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: Never attach real CDR/CTR exports. Reduce the problem to a few synthetic rows.
+  - type: dropdown
+    id: command
+    attributes:
+      label: Command
+      options: [validate, convert, plan, reconcile, playground]
+    validations: { required: true }
+  - type: textarea
+    id: input
+    attributes:
+      label: Minimal input
+      description: A small call tree YAML or CSV that reproduces it.
+      render: yaml
+    validations: { required: true }
+  - type: textarea
+    id: got
+    attributes: { label: What you got }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What you expected }
+    validations: { required: true }

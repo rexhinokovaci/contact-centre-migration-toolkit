@@ -1,0 +1,19 @@
+name: Vendor export adapter
+description: Support a new legacy IVR platform's export format.
+labels: [enhancement, adapter]
+body:
+  - type: input
+    id: vendor
+    attributes: { label: Platform and version, placeholder: e.g. Genesys Engage 8.5, Avaya Aura Experience Portal 8 }
+    validations: { required: true }
+  - type: textarea
+    id: format
+    attributes:
+      label: Export format
+      description: File type and a small, anonymised excerpt.
+    validations: { required: true }
+  - type: textarea
+    id: constructs
+    attributes:
+      label: Constructs that don't map cleanly
+      description: e.g. database dips, time-of-day routing tables, skill-based routing, speech grammars.

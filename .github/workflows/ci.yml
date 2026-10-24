@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install -e '.[dev]'
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy
+      - run: pytest --cov=ccmt --cov-report=term-missing --cov-fail-under=90
+      - name: CLI smoke test on samples
+        run: |
+          ccmt validate samples/partner-ivr.yaml
+          ccmt convert samples/partner-ivr.yaml -o out/main-ivr.json
+          ccmt plan samples/numbers.csv --start 2026-11-02
+          ccmt reconcile samples/legacy_cdr.csv samples/connect_ctr.csv || test $? -eq 2
+      - name: Samples are reproducible
+        if: matrix.python == '3.13'
+        run: |
+          python samples/generate.py
+          git diff --exit-code samples/
