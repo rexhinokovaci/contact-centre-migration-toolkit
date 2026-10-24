@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Migration Toolkit · Rex On Call</title>
+    <meta name="description" content="Convert a legacy IVR call tree into Amazon Connect flows, plan number cutover waves and reconcile traffic, running the real Python toolkit in your browser." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/55946528?v=4&s=64" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap wide nav-inner">
+        <a class="logo" href="https://github.com/rexhinokovaci"><img src="https://avatars.githubusercontent.com/u/55946528?v=4&s=96" alt="" width="30" height="30" /><span>Rex <b>On Call</b></span></a>
+        <nav class="seg-nav" aria-label="Demos">
+          <a href="https://rexhinokovaci.github.io/amazon-connect-voice-platform/demo/">IVR</a>
+          <a href="https://rexhinokovaci.github.io/nova-sonic-voice-agent/">Voice agent</a>
+          <a href="./" aria-current="page">Migration</a>
+        </nav>
+        <nav class="nav-links">
+          <button class="tour-btn" id="tour-btn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2zm2.1-7.75-.9.92A3.4 3.4 0 0 0 13 13h-2v-.5a4 4 0 0 1 1.2-2.83l1.24-1.26A2 2 0 1 0 10 7H8a4 4 0 1 1 7.1 2.25z"/></svg>Take the tour</button>
+          <a class="pill-btn small" href="https://github.com/rexhinokovaci/contact-centre-migration-toolkit">View on GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap wide">
+      <section class="hero">
+        <p class="kicker"><span class="dot" id="py-dot"></span><span id="py-status">Loading Python…</span></p>
+        <h1>Move a partner IVR onto Connect <span class="mark-u">without guesswork.</span></h1>
+        <p class="lede">
+          Convert the legacy call tree, plan which numbers move when, and check traffic afterwards. This page runs the
+          real <code>ccmt</code> Python package in your browser via Pyodide, on the same sample data as the tests.
+        </p>
+      </section>
+
+      <div class="steps" role="tablist" id="steps">
+        <button role="tab" aria-selected="true" data-step="convert"><span class="n">1</span><span><b>Convert</b><small>Call tree → Connect flow</small></span></button>
+        <button role="tab" aria-selected="false" data-step="plan"><span class="n">2</span><span><b>Plan</b><small>Number cutover waves</small></span></button>
+        <button role="tab" aria-selected="false" data-step="reconcile"><span class="n">3</span><span><b>Reconcile</b><small>Before vs after traffic</small></span></button>
+      </div>
+
+      <!-- Convert -->
+      <section class="step" id="step-convert">
+        <div class="two">
+          <div class="card-block">
+            <div class="block-head"><div><h2 class="h3">Legacy call tree</h2><p>The partner's IVR, normalised to YAML. Edit it: break a link, add a menu.</p></div><button class="pill-btn" id="run-convert" disabled>Convert</button></div>
+            <textarea class="code editor" id="tree-src" spellcheck="false" aria-label="Call tree YAML"></textarea>
+          </div>
+          <div class="card-block">
+            <div class="block-head"><div><h2 class="h3">Result</h2><p>Validation, the tree as callers hear it, and the generated flow.</p></div><span class="tag" id="convert-tag">Not run</span></div>
+            <div id="convert-out" class="out"><p class="tray-empty">Press Convert.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Plan -->
+      <section class="step" id="step-plan" hidden>
+        <div class="two">
+          <div class="card-block">
+            <div class="block-head"><div><h2 class="h3">Number inventory</h2><p>Every DID, its daily volume, carrier port group and whether it's business-critical.</p></div><button class="pill-btn" id="run-plan" disabled>Plan waves</button></div>
+            <div class="params">
+              <label>Earliest cutover<input type="date" id="start" value="2026-11-02" /></label>
+              <label>Bank holidays<input id="holidays" value="2026-12-25, 2026-12-28" /></label>
+              <label>Bake days<input type="number" id="bake" value="5" min="1" max="20" /></label>
+              <label>Max share per wave<input type="number" id="share" value="0.35" min="0.05" max="1" step="0.05" /></label>
+            </div>
+            <textarea class="code editor short" id="inventory" spellcheck="false" aria-label="Number inventory CSV"></textarea>
+          </div>
+          <div class="card-block">
+            <div class="block-head"><div><h2 class="h3">Cutover plan</h2><p>Smallest safe group first, critical numbers last, never on a Friday.</p></div><span class="tag" id="plan-tag">Not run</span></div>
+            <div id="plan-out" class="out"><p class="tray-empty">Press Plan waves.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reconcile -->
+      <section class="step" id="step-reconcile" hidden>
+        <div class="card-block">
+          <div class="block-head">
+            <div><h2 class="h3">Traffic reconciliation</h2><p>Five days of legacy CDRs against five days on Connect, per number. Upload your own normalised CSVs or use the samples.</p></div>
+            <button class="pill-btn" id="run-reconcile" disabled>Reconcile</button>
+          </div>
+          <div class="files">
+            <label class="file"><span>Legacy CDRs</span><input type="file" id="legacy-file" accept=".csv,text/csv" /><em id="legacy-name">samples/legacy_cdr.csv</em></label>
+            <label class="file"><span>Connect CTRs</span><input type="file" id="connect-file" accept=".csv,text/csv" /><em id="connect-name">samples/connect_ctr.csv</em></label>
+          </div>
+          <div id="reconcile-out" class="out"><p class="tray-empty">Press Reconcile.</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap wide foot">
+      <span>MIT licensed · Fictional brand and numbers</span>
+      <a href="https://github.com/rexhinokovaci/contact-centre-migration-toolkit/tree/main/demo">Source for this page</a>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

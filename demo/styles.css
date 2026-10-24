@@ -1,0 +1,79 @@
+.hero { padding-top: 48px; padding-bottom: 28px; }
+.kicker .dot { background: var(--amber); }
+.kicker.ready .dot { background: var(--blue); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+@media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+.steps button { display: flex; align-items: center; gap: 12px; text-align: left; font: inherit; color: inherit; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+.steps button[aria-selected='true'] { border-color: var(--text); box-shadow: 0 10px 24px -18px rgb(11 13 18 / 0.4); }
+.steps .n { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--chip); font: 600 13px var(--mono); flex: none; }
+.steps [aria-selected='true'] .n { background: var(--text); color: #fff; }
+.steps b { display: block; font-size: 15px; }
+.steps small { color: var(--muted); font-size: 13px; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px; align-items: start; }
+@media (max-width: 960px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.editor { width: 100%; height: 560px; resize: vertical; background: #fff; }
+.editor.short { height: 380px; }
+.editor:focus { outline: 2px solid var(--blue-2); outline-offset: -1px; }
+.out { display: grid; gap: 14px; max-height: 700px; overflow: auto; }
+.issues { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.issues li { padding: 9px 12px; border-radius: 10px; font-size: 13.5px; background: var(--tray); }
+.issues .error { background: #ffeded; color: var(--red); }
+.issues .warning { background: var(--amber-soft); color: #7a4300; }
+.issues code { background: rgb(255 255 255 / 0.7); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat { background: var(--tray); border-radius: 12px; padding: 12px; }
+.stat b { display: block; font-size: 22px; letter-spacing: -0.02em; }
+.stat span { font-size: 12.5px; color: var(--muted); }
+.h4 { font-size: 14px; margin: 4px 0 8px; }
+.tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+.tree ul { margin-left: 14px; padding-left: 14px; border-left: 1px dashed var(--line); }
+.tree li { margin: 6px 0; font-size: 13.5px; }
+.tnode { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 9px; background: var(--tray); }
+.tnode .k { font: 600 12px var(--mono); background: var(--text); color: #fff; border-radius: 6px; padding: 2px 7px; }
+.tnode .t { font: 500 11px var(--mono); text-transform: uppercase; color: var(--muted); letter-spacing: 0.04em; }
+.tnode.queue { background: var(--blue-soft); }
+.tnode.transfer { background: var(--amber-soft); }
+.tnode.ref { background: none; border: 1px dashed var(--line); color: var(--muted); }
+.json-wrap { position: relative; }
+.json-wrap pre { max-height: 360px; overflow: auto; }
+.json-actions { display: flex; gap: 8px; }
+.ghost-btn.small { padding: 9px 14px; font-size: 13.5px; }
+.params { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+@media (max-width: 720px) { .params { grid-template-columns: repeat(2, 1fr); } }
+.params label { font-size: 12.5px; color: var(--muted); display: grid; gap: 4px; }
+.params input { font: 500 14px var(--font); padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--text); min-width: 0; }
+.params input:focus { outline: 0; border-color: var(--blue-2); box-shadow: 0 0 0 3px var(--blue-soft); }
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.wave { border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.wave.critical { border-color: #f3c58a; background: #fffaf2; }
+.wave-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.wave-top b { font-size: 16px; }
+.wave-top span { font: 500 13px var(--mono); color: var(--muted); }
+.share { height: 8px; border-radius: 999px; background: var(--chip); margin: 10px 0; overflow: hidden; }
+.share i { display: block; height: 100%; background: var(--blue); border-radius: 999px; }
+.wave.critical .share i { background: var(--amber); }
+.wave ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13.5px; }
+.wave li { display: flex; justify-content: space-between; gap: 8px; }
+.wave li code { font-size: 12px; }
+.wave li span { color: var(--muted); font: 12.5px var(--mono); white-space: nowrap; }
+.files { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+@media (max-width: 720px) { .files { grid-template-columns: 1fr; } }
+.file { display: grid; gap: 6px; padding: 12px 14px; border-radius: 12px; background: var(--tray); font-size: 13.5px; cursor: pointer; }
+.file span { font-weight: 600; }
+.file em { font: normal 12.5px var(--mono); color: var(--muted); }
+.file input { font-size: 13px; }
+.verdict { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px; }
+.verdict strong { font-size: 18px; letter-spacing: -0.015em; display: block; }
+.verdict span { font-size: 14px; color: var(--text-2); }
+.verdict.pass { background: var(--green-soft); }
+.verdict.investigate { background: var(--amber-soft); }
+.verdict.rollback { background: #ffeded; }
+.pill { display: inline-block; font: 600 12px/1 var(--font); padding: 6px 9px; border-radius: 999px; text-transform: capitalize; }
+.pill.pass { background: var(--green-soft); color: var(--green); }
+.pill.investigate { background: var(--amber-soft); color: var(--amber); }
+.pill.rollback { background: #ffeded; color: var(--red); }
+.table td.reasons { font-size: 12.5px; color: var(--text-2); max-width: 280px; }
+.delta-bad { color: var(--red); font-weight: 600; }
+.loading-veil { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--blue); animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
