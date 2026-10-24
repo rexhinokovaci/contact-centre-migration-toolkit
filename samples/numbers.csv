@@ -1,0 +1,11 @@
+did,label,calls_per_day,port_group,critical
++441134960000,Residential main line,4200,PG-A,true
++441134960001,Business customers,610,PG-B,false
++441134960002,Payments line,980,PG-C,false
++441134960003,Moving home,240,PG-D,false
++441134960004,Meter readings,1350,PG-C,false
++441134960005,Smart meter bookings,130,PG-E,false
++441134960006,Complaints,190,PG-F,false
++441134960007,Priority Services Register,320,PG-G,true
++441134960008,Prepayment top-up,760,PG-H,false
++441134960009,Welsh language line,85,PG-I,false

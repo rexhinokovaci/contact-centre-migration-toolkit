@@ -1,0 +1,71 @@
+# Export from the outsourced partner's IVR, normalised to ccmt's format.
+# Brand and numbers are fictional.
+name: Brightwell Energy - residential (partner IVR)
+timezone: Europe/London
+hours:
+  weekdays: "08:00-20:00"
+  saturday: "09:00-17:00"
+  sunday: closed
+holidays: [2026-12-25, 2026-12-26, 2027-01-01]
+entry: check-hours
+
+nodes:
+  check-hours:
+    type: hours
+    open: main-menu
+    closed: closed-message
+
+  closed-message:
+    type: message
+    prompt: "We're closed right now. If you can smell gas, press 9 on the next menu or call 0800 111 999."
+    next: emergency-only
+
+  emergency-only:
+    type: menu
+    prompt: "If you can smell gas, press 9. Otherwise please call back during opening hours."
+    options: { "9": gas-emergency }
+    timeout: goodbye
+    retries: 0
+
+  main-menu:
+    type: menu
+    prompt: "For billing, press 1. To give a meter reading, press 2. If you're moving home, press 3. If you can smell gas, press 9."
+    options:
+      "1": billing-menu
+      "2": meter-readings
+      "3": home-moves
+      "9": gas-emergency
+    timeout: general
+    retries: 2
+
+  billing-menu:
+    type: menu
+    prompt: "To make a payment, press 1. If you're struggling to pay, press 2. For anything else about your bill, press 3."
+    options:
+      "1": payments
+      "2": financial-support
+      "3": billing
+    timeout: billing
+    retries: 1
+
+  payments: { type: queue, queue: Payments }
+  financial-support: { type: queue, queue: Financial Support }
+  billing: { type: queue, queue: Billing }
+  meter-readings: { type: queue, queue: Meter Readings }
+  home-moves: { type: queue, queue: Home Moves }
+  general: { type: queue, queue: General Enquiries }
+
+  gas-emergency:
+    type: transfer
+    prompt: "Connecting you to the national gas emergency service."
+    number: "+44800111999"
+
+  goodbye:
+    type: message
+    prompt: "Thanks for calling. Goodbye."
+    next: hangup
+
+  hangup: { type: hangup }
+
+  # Left over from a 2023 campaign; nothing routes here any more.
+  smart-meter-campaign: { type: queue, queue: Smart Meter Campaign }
